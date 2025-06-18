@@ -22,7 +22,7 @@ export const getNotes = async (req, res) => {
     ]
   };
 
-  if (req.role === 'admin') {
+  if (req.userRole === 'admin') {
     query = {}; // Admin sees all
   }
 
