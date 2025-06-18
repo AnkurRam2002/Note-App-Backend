@@ -41,7 +41,7 @@ export const updateNote = async (req, res) => {
       ]
     };
 
-    if (req.role === 'admin') {
+    if (req.userRole === 'admin') {
       query = { _id: req.params.id };
     }
 
