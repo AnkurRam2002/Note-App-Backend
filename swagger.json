@@ -26,7 +26,7 @@
     }
   ],
   "paths": {
-    "/": {
+    "/notes": {
       "get": {
         "summary": "Get all notes",
         "security": [{ "bearerAuth": [] }],
@@ -58,7 +58,7 @@
         }
       }
     },
-    "/{id}": {
+    "/notes/{id}": {
       "get": {
         "summary": "Get a single note by ID",
         "security": [{ "bearerAuth": [] }],
@@ -92,7 +92,7 @@
         }
       }
     },
-    "/edit/{id}": {
+    "/notes/edit/{id}": {
       "put": {
         "summary": "Update a note by ID",
         "security": [{ "bearerAuth": [] }],
@@ -125,7 +125,7 @@
         }
       }
     },
-    "/share/{id}": {
+    "/notes/share/{id}": {
       "post": {
         "summary": "Share a note with a user",
         "security": [{ "bearerAuth": [] }],
@@ -159,7 +159,7 @@
         }
       }
     },
-    "/users": {
+    "/notes/users": {
       "get": {
         "summary": "Get list of all users",
         "security": [{ "bearerAuth": [] }],
