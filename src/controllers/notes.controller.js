@@ -9,8 +9,8 @@ export const createNote = async (req, res) => {
 
 export const getNotes = async (req, res) => {
   const { search = '' } = req.query;
-  const query = {
-    $and: [
+  
+  const baseConditions = [
       { $or: [{ owner: req.userId }, { 'sharedWith.user': req.userId }] },
       {
         $or: [
@@ -19,12 +19,15 @@ export const getNotes = async (req, res) => {
           { tags: new RegExp(search, 'i') }
         ]
       }
-    ]
-  };
+    ];
 
-  if (req.userRole === 'admin') {
-    query = {}; // Admin sees all
-  }
+    if (req.role === 'admin') {
+      baseConditions.push({}); // admin sees everything
+    }
+
+  const query = {
+    $and: baseConditions // Combine conditions for owner, shared users, and search
+  };
 
   const notes = await Note.find(query)
 
