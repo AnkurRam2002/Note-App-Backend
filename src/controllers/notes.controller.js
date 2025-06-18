@@ -22,6 +22,10 @@ export const getNotes = async (req, res) => {
     ]
   };
 
+  if (req.role === 'admin') {
+    query = {}; // Admin sees all
+  }
+
   const notes = await Note.find(query)
 
   const total = await Note.countDocuments(query);
