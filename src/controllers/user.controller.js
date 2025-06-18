@@ -4,7 +4,7 @@ export const getUsers = async (req, res) => {
   try {
     const users = await User.find(
       { _id: { $ne: req.userId } }, 
-      'name' 
+      'name email role' 
     );
     res.json(users);
   } catch (error) {
