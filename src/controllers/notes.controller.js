@@ -33,23 +33,29 @@ export const getNotes = async (req, res) => {
 };
 
 export const updateNote = async (req, res) => {
-  const note = await Note.findOneAndUpdate(
-    {
-    _id: req.params.id,
-    $or: [
-      { owner: req.userId },
-      { 'sharedWith.user': req.userId }
-    ]
-  },
-    req.body,
-    { new: true }
-  );
+  let query = {
+      _id: req.params.id,
+      $or: [
+        { owner: req.userId },
+        { 'sharedWith.user': req.userId }
+      ]
+    };
+
+    if (req.role === 'admin') {
+      query = { _id: req.params.id };
+    }
+
+    const note = await Note.findOneAndUpdate(
+      query,
+      req.body,
+      { new: true }
+    );
   if (!note) return res.status(404).json({ message: 'Note not found' });
   res.json(note);
 };
 
 export const deleteNote = async (req, res) => {
-  const note = await Note.findOneAndDelete({ _id: req.params.id, owner: req.userId });
+  const note = await Note.findOneAndDelete({ _id: req.params.id});
   if (!note) return res.status(404).json({ message: 'Note not found or Unauthorized' });
   res.json({ message: 'Deleted' });
 };
