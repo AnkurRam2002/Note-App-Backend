@@ -13,7 +13,7 @@ router.get('/:id', getNote);
 router.put('/edit/:id', updateNote);
 router.delete('/:id', deleteNote);
 router.post('/share/:id', shareNote);
-router.get('/:id/shared-users/:id', getSharedUsers);
+router.get('/:id/shared-users', getSharedUsers);
 router.delete('/:id/share/:userId', revokeShare);
 router.post('/:id/update-share-permission', updateSharePermission);
 router.put('/update-user-role', updateUserRole);
