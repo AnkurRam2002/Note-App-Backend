@@ -102,7 +102,9 @@ export const getNote = async (req, res) => {
     ];
   }
 
-  const note = await Note.findOne(query);
+  const note = await Note.findOne(query)
+  .populate('owner', 'name email')
+  .populate('sharedWith.user', 'name email');
 
   if (!note) return res.status(404).json({ message: 'Note not found' });
 
@@ -159,4 +161,16 @@ export const revokeShare = async (req, res) => {
   }
 };
 
+export const getNoteById = async (req, res) => {
+  await Note.findById(req.params.id)
+  .populate('owner', 'name email')
+  .populate('sharedWith.user', 'name email')
+  .then(note => {
+    if (!note) return res.status(404).json({ message: 'Note not found' });
+    res.json(note);
+  })  
+  .catch(err => {
+    res.status(500).json({ message: 'Server error', error: err });
+  });
+};
 
