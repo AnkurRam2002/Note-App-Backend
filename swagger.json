@@ -186,6 +186,102 @@
         }
       }
     },
+     "/notes/users": {
+    "get": {
+      "tags": ["Users"],
+      "summary": "Get list of all users",
+      "security": [{ "bearerAuth": [] }],
+      "responses": {
+        "200": { "description": "List of users" }
+      }
+    }
+  },
+  "/notes/{noteId}/shared-users": {
+    "get": {
+      "tags": ["Notes"],
+      "summary": "Get list of users with whom a note is shared",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        { "name": "noteId", "in": "path", "required": true, "schema": { "type": "string" } }
+      ],
+      "responses": {
+        "200": { "description": "List of shared users" },
+        "404": { "description": "Note not found" }
+      }
+    }
+  },
+  "/notes/{noteId}/share/{userId}": {
+    "delete": {
+      "tags": ["Notes"],
+      "summary": "Revoke note access from a user",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        { "name": "noteId", "in": "path", "required": true, "schema": { "type": "string" } },
+        { "name": "userId", "in": "path", "required": true, "schema": { "type": "string" } }
+      ],
+      "responses": {
+        "200": { "description": "Access revoked successfully" },
+        "404": { "description": "Note or user not found" }
+      }
+    }
+  },
+  "/notes/{noteId}/update-share-permission": {
+    "post": {
+      "tags": ["Notes"],
+      "summary": "Update share permission for a user",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        { "name": "noteId", "in": "path", "required": true, "schema": { "type": "string" } }
+      ],
+      "requestBody": {
+        "description": "User ID and new permission",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": { "type": "string" },
+                "permission": { "type": "string", "enum": ["read", "write"] }
+              },
+              "required": ["userId", "permission"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Permission updated successfully" },
+        "404": { "description": "Note or user not found" }
+      }
+    }
+  },
+  "/notes/update-user-role": {
+    "put": {
+      "tags": ["Users"],
+      "summary": "Update a user's role",
+      "security": [{ "bearerAuth": [] }],
+      "requestBody": {
+        "description": "User ID and new role",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": { "type": "string" },
+                "role": { "type": "string", "enum": ["user", "manager", "admin"] }
+              },
+              "required": ["userId", "role"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "User role updated successfully" },
+        "404": { "description": "User not found" }
+      }
+    }
+  },
     "/auth/login": {
       "post": {
         "tags": ["Authentication"],
