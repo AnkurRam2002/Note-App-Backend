@@ -9,6 +9,7 @@ export const createNote = async (req, res) => {
 
 export const getNotes = async (req, res) => {
   const { search = '' } = req.query;
+
   let query = {
     $and: [
       { $or: [{ owner: req.userId }, { 'sharedWith.user': req.userId }] },
@@ -23,13 +24,19 @@ export const getNotes = async (req, res) => {
   };
 
   if (req.userRole === 'admin') {
-    query = {}; // Admin sees all
+    query = {}; 
   }
 
-  const notes = await Note.find(query)
+  try {
+    const notes = await Note.find(query)
+      .populate('owner', 'name email') 
+      .exec();
 
-  const total = await Note.countDocuments(query);
-  res.json(notes);
+    const total = await Note.countDocuments(query);
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err });
+  }
 };
 
 export const updateNote = async (req, res) => {
