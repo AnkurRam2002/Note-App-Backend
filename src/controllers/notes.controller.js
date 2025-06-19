@@ -92,10 +92,15 @@ export const shareNote = async (req, res) => {
 };
 
 export const getNote = async (req, res) => {
-  const note = await Note.findOne({
-    _id: req.params.id,
-    $or: [{ owner: req.userId }, { 'sharedWith.user': req.userId }]
-  });
+  
+  if (req.userRole !== 'admin') {
+    query.$or = [
+      { owner: req.userId },
+      { 'sharedWith.user': req.userId }
+    ];
+  }
+
+  const note = await Note.findOne(query);
 
   if (!note) return res.status(404).json({ message: 'Note not found' });
 
