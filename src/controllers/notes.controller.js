@@ -113,7 +113,8 @@ export const getSharedUsers = async (req, res) => {
     const sharedUsers = note.sharedWith.map(sw => ({
       _id: sw.user._id,
       name: sw.user.name,
-      email: sw.user.email
+      email: sw.user.email,
+      permission: sw.permission
     }));
 
     res.json(sharedUsers);
