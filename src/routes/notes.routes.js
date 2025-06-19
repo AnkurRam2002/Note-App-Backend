@@ -1,6 +1,6 @@
 import express from 'express';
 import { createNote, getNotes, updateNote, deleteNote, shareNote, getNote, getSharedUsers, revokeShare } from '../controllers/notes.controller.js';
-import { getUsers } from '../controllers/user.controller.js';
+import { getUsers, updateSharePermission } from '../controllers/user.controller.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
