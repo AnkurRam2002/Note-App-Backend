@@ -144,7 +144,8 @@
                 "type": "object",
                 "properties": {
                   "userId": { "type": "string" },
-                  "permission": { "type": "string", "enum": ["read", "write"] }
+                  "permission": { "type": "string", "enum": ["read", "write"] },
+                  "noteId": { "type": "string" }
                 },
                 "required": ["userId", "permission"]
               }
