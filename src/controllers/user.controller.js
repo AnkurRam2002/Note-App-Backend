@@ -11,3 +11,25 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ message: 'Error fetching users', error: error.message });
   }
 };
+
+export const updateSharePermission = async (req, res) => {
+  const noteId = req.params.id;
+  const { userId, permission } = req.body;
+
+  try {
+    const note = await Note.findById(noteId);
+    if (!note) return res.status(404).json({ message: 'Note not found' });
+
+    const sharedUser = note.sharedWith.find(
+      (share) => share.user.toString() === userId
+    );
+    if (!sharedUser) return res.status(404).json({ message: 'User not shared' });
+
+    sharedUser.permission = permission;
+    await note.save();
+
+    res.json({ message: 'Permission updated successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -15,6 +15,7 @@ router.delete('/:id', deleteNote);
 router.post('/share/:id', shareNote);
 router.get('/:id/shared-users/:id', getSharedUsers);
 router.delete('/:id/share/:userId', revokeShare);
+router.post('/:id/update-share-permission', updateSharePermission);
 
 
 
