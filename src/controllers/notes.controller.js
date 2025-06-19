@@ -92,6 +92,8 @@ export const shareNote = async (req, res) => {
 };
 
 export const getNote = async (req, res) => {
+
+  const query = { _id: req.params.id };
   
   if (req.userRole !== 'admin') {
     query.$or = [
