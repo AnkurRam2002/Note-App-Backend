@@ -8,8 +8,14 @@
   "servers": [
     {
       "url": "https://note-app-backend-hfd8.onrender.com/api",
-      "description": "Local development server"
+      "description": "Production Server"
     }
+  ],
+  "tags": [
+    { "name": "Authentication", "description": "User registration and login" },
+    { "name": "Notes", "description": "Operations related to notes management" },
+    { "name": "Analytics", "description": "Notes usage analytics" },
+    { "name": "Users", "description": "User-related endpoints" }
   ],
   "components": {
     "securitySchemes": {
@@ -21,13 +27,12 @@
     }
   },
   "security": [
-    {
-      "bearerAuth": []
-    }
+    { "bearerAuth": [] }
   ],
   "paths": {
     "/notes": {
       "get": {
+        "tags": ["Notes"],
         "summary": "Get all notes",
         "security": [{ "bearerAuth": [] }],
         "responses": {
@@ -35,6 +40,7 @@
         }
       },
       "post": {
+        "tags": ["Notes"],
         "summary": "Create a new note",
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -60,15 +66,11 @@
     },
     "/notes/{id}": {
       "get": {
+        "tags": ["Notes"],
         "summary": "Get a single note by ID",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": { "description": "Note details" },
@@ -76,15 +78,11 @@
         }
       },
       "delete": {
+        "tags": ["Notes"],
         "summary": "Delete a note by ID",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": { "description": "Note deleted successfully" },
@@ -94,15 +92,11 @@
     },
     "/notes/edit/{id}": {
       "put": {
+        "tags": ["Notes"],
         "summary": "Update a note by ID",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "description": "Updated note content",
@@ -127,15 +121,11 @@
     },
     "/notes/share/{id}": {
       "post": {
+        "tags": ["Notes"],
         "summary": "Share a note with a user",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "description": "User ID and permission",
@@ -161,6 +151,7 @@
     },
     "/notes/users": {
       "get": {
+        "tags": ["Users"],
         "summary": "Get list of all users",
         "security": [{ "bearerAuth": [] }],
         "responses": {
@@ -170,6 +161,7 @@
     },
     "/auth/register": {
       "post": {
+        "tags": ["Authentication"],
         "summary": "Register a new user",
         "requestBody": {
           "description": "User registration details",
@@ -196,6 +188,7 @@
     },
     "/auth/login": {
       "post": {
+        "tags": ["Authentication"],
         "summary": "Login a user",
         "requestBody": {
           "description": "User login credentials",
@@ -221,6 +214,7 @@
     },
     "/analytics": {
       "get": {
+        "tags": ["Analytics"],
         "summary": "Get analytics data",
         "security": [{ "bearerAuth": [] }],
         "responses": {
@@ -253,3 +247,4 @@
     }
   }
 }
+
