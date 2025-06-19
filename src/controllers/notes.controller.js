@@ -67,7 +67,7 @@ export const shareNote = async (req, res) => {
   if (!note) return res.status(404).json({ message: 'Note not found' });
 
   // only owner can share
-  if (note.owner.toString() !== req.userId || req.userRole !== 'admin')
+  if (note.owner.toString() !== req.userId && req.userRole !== 'admin')
     return res.status(403).json({ message: 'Unauthorized' });
 
   // Check if already shared with this user
