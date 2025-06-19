@@ -1,6 +1,6 @@
 import express from 'express';
 import { createNote, getNotes, updateNote, deleteNote, shareNote, getNote, getSharedUsers, revokeShare } from '../controllers/notes.controller.js';
-import { getUsers, updateSharePermission } from '../controllers/user.controller.js';
+import { getUsers, updateSharePermission, updateUserRole } from '../controllers/user.controller.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.post('/share/:id', shareNote);
 router.get('/:id/shared-users/:id', getSharedUsers);
 router.delete('/:id/share/:userId', revokeShare);
 router.post('/:id/update-share-permission', updateSharePermission);
+router.put('/update-user-role', updateUserRole);
 
 
 

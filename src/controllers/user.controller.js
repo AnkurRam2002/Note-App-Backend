@@ -33,4 +33,19 @@ export const updateSharePermission = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+  
 };
+
+export const updateUserRole = async (req, res) => {
+  const { userId, newRole } = req.body;
+
+  if (req.userRole !== 'admin') {
+    return res.status(403).json({ message: 'Only admins can update user roles' });
+  }
+
+  const user = await User.findByIdAndUpdate(userId, { role: newRole }, { new: true });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  res.json({ message: 'Role updated successfully', user });
+};
+
