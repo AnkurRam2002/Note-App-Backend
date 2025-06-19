@@ -52,7 +52,11 @@
                 "type": "object",
                 "properties": {
                   "title": { "type": "string" },
-                  "content": { "type": "string" }
+                  "content": { "type": "string" },
+                   "tags": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                      }
                 },
                 "required": ["title", "content"]
               }
@@ -107,7 +111,11 @@
                 "type": "object",
                 "properties": {
                   "title": { "type": "string" },
-                  "content": { "type": "string" }
+                  "content": { "type": "string" },
+                  "tags": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
                 }
               }
             }
@@ -186,16 +194,6 @@
         }
       }
     },
-     "/notes/users": {
-    "get": {
-      "tags": ["Users"],
-      "summary": "Get list of all users",
-      "security": [{ "bearerAuth": [] }],
-      "responses": {
-        "200": { "description": "List of users" }
-      }
-    }
-  },
   "/notes/{noteId}/shared-users": {
     "get": {
       "tags": ["Notes"],
